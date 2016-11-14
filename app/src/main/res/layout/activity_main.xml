@@ -10,4 +10,13 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="sunshine.android.weather.com.sunshine.MainActivity">
 
+
+    <fragment
+        android:name="sunshine.android.weather.com.sunshine.forecastFragment"
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/fragment_layout">
+    </fragment>
+
 </FrameLayout>
