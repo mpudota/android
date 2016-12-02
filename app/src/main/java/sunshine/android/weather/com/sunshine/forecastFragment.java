@@ -123,6 +123,7 @@ public class forecastFragment extends Fragment {
                 httpURLConnection.setRequestMethod("GET");
                 httpURLConnection.connect();
 
+                Log.d("Fetch Weather", "URL Builder" + builduri.toString());
 
 
 
