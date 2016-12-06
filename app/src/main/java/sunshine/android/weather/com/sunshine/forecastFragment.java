@@ -11,8 +11,12 @@ import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
+
+import org.json.JSONException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,11 +35,14 @@ import java.util.List;
 
 public class forecastFragment extends Fragment {
 
-    public forecastFragment(){
-        }
+    WeatherDataParser weatherDataParser = new WeatherDataParser();
+    ArrayAdapter<String> adapter;
+
+    public forecastFragment() {
+    }
 
     @Override
-    public void onCreate(Bundle savedInstanceState){
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setHasOptionsMenu(true);
@@ -47,21 +54,22 @@ public class forecastFragment extends Fragment {
 //        MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu, menu);
     }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (item.getItemId() == R.id.refresh)
-        {
-         FetchWeather fetchWeather = new FetchWeather();
-           fetchWeather.execute("94043");
+        if (item.getItemId() == R.id.refresh) {
+            FetchWeather fetchWeather = new FetchWeather();
+            fetchWeather.execute("94043");
             return true;
         }
-      return super.onOptionsItemSelected(item);
+        return super.onOptionsItemSelected(item);
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        String [] forecastArray = {"Today-Sunny-88/53",
+        String[] forecastArray = {"Today-Sunny-88/53",
                 "Tomorrow-cloud-77/65",
                 "Wed-rainy-69/61",
                 "Thu-Sunny-81/63",
@@ -69,26 +77,57 @@ public class forecastFragment extends Fragment {
                 "Sat-Rain-83/57",
                 "Sun-Sunny-85/78"};
 
-                    List<String> weatherArray = new ArrayList<String>(Arrays.asList(forecastArray));
+        List<String> weatherArray = new ArrayList<String>(Arrays.asList(forecastArray));
 
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, weatherArray);
+        adapter = new ArrayAdapter<String>(getActivity(), R.layout.list_item_forecast, R.id.list_item_forecast_textview, weatherArray);
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-         ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
-            listView.setAdapter(adapter);
-            return rootView;
-        }
+        ListView listView = (ListView) rootView.findViewById(R.id.listview_forecast);
+        listView.setAdapter(adapter);
 
-    public class FetchWeather extends AsyncTask<String,Void,Void> {
+        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                String forecast = adapter.getItem(i);
+                Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
+            }
+        });
+        return rootView;
+    }
+
+    public class FetchWeather extends AsyncTask<String, Void, String[]> {
 
         public static final String Open_Weather_Map_Api = "48c58a9aa540fc470bf186871e168d68";
-        @Override
-        protected Void doInBackground(String... strings) {
 
-            if (strings.length == 0) {
-                return null;
+        public String[] information(String jsonString, int numdays) throws JSONException {
+
+            String[] arrayofinfo = new String[numdays];
+            for (int i = 0; i < numdays; i++) {
+
+                Double maxTemp = weatherDataParser.getMaxTemp(jsonString, i);
+                double minTemp = weatherDataParser.getMinTemp(jsonString, i);
+                String main = weatherDataParser.getMain(jsonString, i);
+
+                arrayofinfo[i] = "Day" + (i + 1) + " - " + maxTemp + " / " + minTemp
+                        + "  -  " + main;
+
+
             }
+            for (String s : arrayofinfo) {
+                Log.v("Log", "forecastedvalue is " + s);
+            }
+
+            return arrayofinfo;
+        }
+
+
+        @Override
+        protected String[] doInBackground(String... strings) {
+//
+//            if (strings.length == 0) {
+//                return null;
+//            }
 
             final String format = "json";
             final String units = "metric";
@@ -100,7 +139,7 @@ public class forecastFragment extends Fragment {
             final String COUNT_PARAM = "cnt";
             final String APPID_PARAM = "APPID";
 
-            HttpURLConnection httpURLConnection = null ;
+            HttpURLConnection httpURLConnection = null;
             BufferedReader bufferedReader = null;
             String forecastJson = null;
 
@@ -126,7 +165,6 @@ public class forecastFragment extends Fragment {
                 Log.d("Fetch Weather", "URL Builder" + builduri.toString());
 
 
-
                 InputStream inputStream = httpURLConnection.getInputStream();
                 StringBuffer stringBuffer = new StringBuffer();
 
@@ -137,7 +175,7 @@ public class forecastFragment extends Fragment {
                 bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
-                    stringBuffer.append(line+"/n");
+                    stringBuffer.append(line + "/n");
 
                 }
 
@@ -150,8 +188,7 @@ public class forecastFragment extends Fragment {
                 Log.e("Placeholder fragment", "Error", e);
 //                e.printStackTrace();
                 return null;
-            }
-            finally {
+            } finally {
                 if (httpURLConnection != null) {
                     httpURLConnection.disconnect();
                 }
@@ -163,8 +200,24 @@ public class forecastFragment extends Fragment {
                     }
                 }
             }
+
+            try {
+                return information(forecastJson, 7);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
             return null;
         }
-    }
+
+        @Override
+        protected void onPostExecute(String[] strings) {
+            if (strings != null) {
+                adapter.clear();
+                for (String info : strings) {
+                    adapter.add(info);
+                }
+            }
+        }
 
     }
+}
