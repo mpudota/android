@@ -1,5 +1,6 @@
 package sunshine.android.weather.com.sunshine;
 
+import android.content.Intent;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -66,7 +67,7 @@ public class forecastFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         String[] forecastArray = {"Today-Sunny-88/53",
@@ -90,7 +91,12 @@ public class forecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String forecast = adapter.getItem(i);
-                Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
+
+                String getmessage = "get message";
+                Intent intent = new Intent(getActivity(), DetailActivity.class);
+                intent.putExtra(Intent.EXTRA_TEXT, forecast);
+                startActivity(intent);
+////                Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
             }
         });
         return rootView;
