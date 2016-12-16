@@ -16,20 +16,6 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-<<<<<<< HEAD
-<<<<<<< HEAD
-        <activity android:name=".DetailActivity"
-            android:parentActivityName=".MainActivity">
-
-        </activity>
-=======
-        <activity
-            android:name=".DetailActivity"
-            android:label="@string/title_activity_detail"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
->>>>>>> dev1
-=======
->>>>>>> parent of 7de23a3... added another activity called detail acticity.
     </application>
 
 </manifest>

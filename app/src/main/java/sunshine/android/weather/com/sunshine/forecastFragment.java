@@ -66,7 +66,7 @@ public class forecastFragment extends Fragment {
     }
 
     @Override
-    public View onCreateView(final LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
         String[] forecastArray = {"Today-Sunny-88/53",
@@ -90,23 +90,7 @@ public class forecastFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String forecast = adapter.getItem(i);
-<<<<<<< HEAD
-
-<<<<<<< HEAD
-                String getmessage = "get message";
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, forecast);
-                startActivity(intent);
-////                Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
-=======
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, forecast);
-                startActivity(intent);
-//                Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
->>>>>>> dev1
-=======
                 Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
->>>>>>> parent of 7de23a3... added another activity called detail acticity.
             }
         });
         return rootView;
