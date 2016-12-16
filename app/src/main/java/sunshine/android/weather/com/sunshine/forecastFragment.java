@@ -92,18 +92,12 @@ public class forecastFragment extends Fragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 String forecast = adapter.getItem(i);
 
-<<<<<<< HEAD
-                String getmessage = "get message";
-                Intent intent = new Intent(getActivity(), DetailActivity.class);
-                intent.putExtra(Intent.EXTRA_TEXT, forecast);
-                startActivity(intent);
-////                Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
-=======
+
                 Intent intent = new Intent(getActivity(), DetailActivity.class);
                 intent.putExtra(Intent.EXTRA_TEXT, forecast);
                 startActivity(intent);
 //                Toast.makeText(getActivity(), forecast, Toast.LENGTH_LONG).show();
->>>>>>> dev1
+
             }
         });
         return rootView;
