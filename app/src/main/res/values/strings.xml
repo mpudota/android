@@ -61,14 +61,22 @@
         <item>3</item>
     </string-array>
 
-    <string-array name="temparature_units">
-        <item>Celsius</item>
-        <item>Fahrenheit</item>
 
+
+
+    <string name="location_def_value" translatable="false">94043</string>
+    <string name="temperature_def_value">metric</string>
+    <string name="Imperial" >imperial</string>
+
+    <string-array name="temperature_units">
+        <item>@string/temperature_def_value</item>
+        <item>@string/Imperial</item>
     </string-array>
+
     <string-array name="multi_select_list_preference_default_value" />
 
-    <string name="choose_temp_untis" > Choose temparature units</string>
+    <string name="choose_temp_untis" > C/F </string>
+    <string name="choose_temp_param"> Temparature Units </string>
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
 

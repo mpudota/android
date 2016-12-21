@@ -21,9 +21,6 @@ public class DetailActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar);
-
         Intent intent = getIntent();
         String data = intent.getStringExtra(Intent.EXTRA_TEXT);
         TextView textView = (TextView) findViewById(R.id.details);

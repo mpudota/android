@@ -159,7 +159,8 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
                 || GeneralPreferenceFragment.class.getName().equals(fragmentName)
                 || DataSyncPreferenceFragment.class.getName().equals(fragmentName)
                 || NotificationPreferenceFragment.class.getName().equals(fragmentName)
-                || TemparatureUnitSelectionFragment.class.getName().equals(fragmentName);
+                || TemparatureUnitSelectionFragment.class.getName().equals(fragmentName)
+                || LocationZipCodeFragment.class.getName().equals(fragmentName);
     }
 
     /**
@@ -173,6 +174,7 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             super.onCreate(savedInstanceState);
             addPreferencesFromResource(R.xml.pref_general);
             setHasOptionsMenu(true);
+
 
             // Bind the summaries of EditText/List/Dialog/Ringtone preferences
             // to their values. When their values change, their summaries are
@@ -262,6 +264,38 @@ public class SettingsActivity extends AppCompatPreferenceActivity {
             setHasOptionsMenu(true);
 
             bindPreferenceSummaryToValue(findPreference("temp_units"));
+        }
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id == android.R.id.home) {
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
+        }
+    }
+
+    @TargetApi(Build.VERSION_CODES.HONEYCOMB)
+    public static class LocationZipCodeFragment extends PreferenceFragment {
+
+        @Override
+        public void onCreate (Bundle savedStateInstance) {
+            super.onCreate(savedStateInstance);
+
+            addPreferencesFromResource(R.xml.pref_location);
+            setHasOptionsMenu(true);
+            bindPreferenceSummaryToValue(findPreference("location"));
+        }
+
+        @Override
+        public boolean onOptionsItemSelected(MenuItem item) {
+            int id = item.getItemId();
+            if (id==android.R.id.home){
+                startActivity(new Intent(getActivity(), SettingsActivity.class));
+                return true;
+            }
+            return super.onOptionsItemSelected(item);
         }
     }
 }

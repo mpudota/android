@@ -19,6 +19,8 @@
 
     <header
         android:fragment="sunshine.android.weather.com.sunshine.SettingsActivity$TemparatureUnitSelectionFragment"
-        android:title="@string/choose_temp_untis"/>
-
+        android:title="@string/choose_temp_param"/>
+    <header
+        android:fragment="sunshine.android.weather.com.sunshine.SettingsActivity$LocationZipCodeFragment"
+        android:title="Location"/>
 </preference-headers>

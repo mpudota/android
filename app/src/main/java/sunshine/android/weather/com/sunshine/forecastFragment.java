@@ -1,10 +1,14 @@
 package sunshine.android.weather.com.sunshine;
 
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.SharedPreferencesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -34,10 +38,14 @@ import java.util.List;
  * Created by mpudota on 11/13/16.
  */
 
+
 public class forecastFragment extends Fragment {
+
 
     WeatherDataParser weatherDataParser = new WeatherDataParser();
     ArrayAdapter<String> adapter;
+
+
 
     public forecastFragment() {
     }
@@ -46,8 +54,10 @@ public class forecastFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        updateWeather();
         setHasOptionsMenu(true);
     }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
@@ -56,12 +66,21 @@ public class forecastFragment extends Fragment {
         menuInflater.inflate(R.menu.menu, menu);
     }
 
+    public void updateWeather() {
+
+        SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+
+        String locationzip = sharedPreferences.getString( "location", getString(R.string.location_def_value));
+        FetchWeather fetchWeather = new FetchWeather();
+        fetchWeather.execute(locationzip);
+        Log.d("Location code", locationzip);
+    }
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
-            FetchWeather fetchWeather = new FetchWeather();
-            fetchWeather.execute("94043");
-            return true;
+            updateWeather();
+
         }
         return super.onOptionsItemSelected(item);
     }
@@ -115,8 +134,10 @@ public class forecastFragment extends Fragment {
                 Double maxTemp = weatherDataParser.getMaxTemp(jsonString, i);
                 double minTemp = weatherDataParser.getMinTemp(jsonString, i);
                 String main = weatherDataParser.getMain(jsonString, i);
+              long  MaxTemp = Math.round(maxTemp);
+                long MinTemp = Math.round(minTemp);
 
-                arrayofinfo[i] = "Day" + (i + 1) + " - " + maxTemp + " / " + minTemp
+                arrayofinfo[i] = "Day" + (i + 1) + " - " + MaxTemp + " / " + MinTemp
                         + "  -  " + main;
 
 
@@ -132,17 +153,24 @@ public class forecastFragment extends Fragment {
         @Override
         protected String[] doInBackground(String... strings) {
 //
-//            if (strings.length == 0) {
-//                return null;
-//            }
+            if (strings.length == 0) {
+                return null;
+            }
+            SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
+            String units = sharedPreferences.getString("temp_units", getString(R.string.temperature_def_value));
+
+//            String units = getResources().getString(R.string.temperature_def_value);
+            Log.v("String value", units);
+
+//            String units = sharedPreferences.getString(R.array.temparature_units);
 
             final String format = "json";
-            final String units = "metric";
+//            final String units = "imperial";
             int numdays = 7;
 
             final String QUERY_PARAM = "q";
             final String FORMAT_PARAM = "mode";
-            final String UNIT_PARAM = "untits";
+            final String UNIT_PARAM = "units";
             final String COUNT_PARAM = "cnt";
             final String APPID_PARAM = "APPID";
 
@@ -170,6 +198,7 @@ public class forecastFragment extends Fragment {
                 httpURLConnection.connect();
 
                 Log.d("Fetch Weather", "URL Builder" + builduri.toString());
+                Log.d("Units value", units);
 
 
                 InputStream inputStream = httpURLConnection.getInputStream();
