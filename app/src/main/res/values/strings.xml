@@ -65,8 +65,8 @@
 
 
     <string name="location_def_value" translatable="false">94043</string>
-    <string name="temperature_def_value">metric</string>
-    <string name="Imperial" >imperial</string>
+    <string name="temperature_def_value" translatable="false">metric</string>
+    <string name="Imperial" translatable="false">imperial</string>
 
     <string-array name="temperature_units">
         <item>@string/temperature_def_value</item>

@@ -3,7 +3,6 @@
 
 <EditTextPreference
     android:defaultValue="@string/location_def_value"
-    android:id="@+id/location"
     android:title="Location Zip"
     android:key="location"
     android:inputType="text"

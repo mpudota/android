@@ -71,6 +71,7 @@ public class forecastFragment extends Fragment {
         SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
 
         String locationzip = sharedPreferences.getString( "location", getString(R.string.location_def_value));
+//
         FetchWeather fetchWeather = new FetchWeather();
         fetchWeather.execute(locationzip);
         Log.d("Location code", locationzip);
@@ -156,16 +157,16 @@ public class forecastFragment extends Fragment {
             if (strings.length == 0) {
                 return null;
             }
+
             SharedPreferences sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-            String units = sharedPreferences.getString("temp_units", getString(R.string.temperature_def_value));
+            String unit = sharedPreferences.getString("temp_units", getString(R.string.temperature_def_value));
 
 //            String units = getResources().getString(R.string.temperature_def_value);
-            Log.v("String value", units);
-
+            Log.v("String value", unit);
 //            String units = sharedPreferences.getString(R.array.temparature_units);
 
             final String format = "json";
-//            final String units = "imperial";
+//            final String unit = "imperial";
             int numdays = 7;
 
             final String QUERY_PARAM = "q";
@@ -187,7 +188,7 @@ public class forecastFragment extends Fragment {
                 Uri builduri = Uri.parse(baseUrl).buildUpon()
                         .appendQueryParameter(QUERY_PARAM, strings[0])
                         .appendQueryParameter(FORMAT_PARAM, format)
-                        .appendQueryParameter(UNIT_PARAM, units)
+                        .appendQueryParameter(UNIT_PARAM, unit)
                         .appendQueryParameter(COUNT_PARAM, Integer.toString(numdays))
                         .appendQueryParameter(APPID_PARAM, Open_Weather_Map_Api).build();
 
@@ -198,7 +199,7 @@ public class forecastFragment extends Fragment {
                 httpURLConnection.connect();
 
                 Log.d("Fetch Weather", "URL Builder" + builduri.toString());
-                Log.d("Units value", units);
+//                Log.d("Units value", units);
 
 
                 InputStream inputStream = httpURLConnection.getInputStream();
