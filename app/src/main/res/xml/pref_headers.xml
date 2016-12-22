@@ -22,5 +22,6 @@
         android:title="@string/choose_temp_param"/>
     <header
         android:fragment="sunshine.android.weather.com.sunshine.SettingsActivity$LocationZipCodeFragment"
+        android:icon="@drawable/ic_location_black_24dp"
         android:title="Location"/>
 </preference-headers>
