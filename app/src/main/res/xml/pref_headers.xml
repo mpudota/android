@@ -23,5 +23,5 @@
     <header
         android:fragment="sunshine.android.weather.com.sunshine.SettingsActivity$LocationZipCodeFragment"
         android:icon="@drawable/ic_location_black_24dp"
-        android:title="Location"/>
+        android:title="@string/choose_zip_location"/>
 </preference-headers>

@@ -2,11 +2,15 @@
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
 
 <EditTextPreference
-    android:defaultValue="@string/location_def_value"
-    android:title="Location Zip"
-    android:key="location"
+
+    android:title="@string/choose_zip_param"
     android:inputType="text"
-    android:singleLine="true"/>
+    android:key="location"
+
+    android:id="@+id/locate"
+    />
+    <!--android:defaultValue="@string/location_def_value"-->
+    <!--android:singleLine="true"-->
 
 
 </PreferenceScreen>

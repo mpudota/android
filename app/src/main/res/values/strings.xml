@@ -72,11 +72,17 @@
         <item>@string/temperature_def_value</item>
         <item>@string/Imperial</item>
     </string-array>
+    <string-array name="temparature_entries">
+        <item>Celcius</item>
+        <item>fahrenheit</item>
+    </string-array>
 
     <string-array name="multi_select_list_preference_default_value" />
 
     <string name="choose_temp_untis" > C/F </string>
     <string name="choose_temp_param"> Temparature Units </string>
+    <string name="choose_zip_location">Location Zip</string>
+    <string name="choose_zip_param">Location zip code</string>
 
     <string name="pref_title_system_sync_settings">System sync settings</string>
 

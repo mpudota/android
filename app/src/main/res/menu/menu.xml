@@ -6,4 +6,7 @@
     <item
         android:id="@+id/settings"
         android:title="@string/settings"/>
+    <item
+        android:id="@+id/preferred_location"
+        android:title="Preferred_location"/>
 </menu>
