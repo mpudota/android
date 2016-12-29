@@ -10,21 +10,23 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 
 import android.widget.TextView;
 
 public class DetailActivity extends AppCompatActivity {
 
+    String data;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_detail);
 
-        Intent intent = getIntent();
-        String data = intent.getStringExtra(Intent.EXTRA_TEXT);
-        TextView textView = (TextView) findViewById(R.id.details);
-        textView.setText(data);
+        dayinfo();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -34,6 +36,37 @@ public class DetailActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu (Menu menu) {
+        MenuInflater menuInflater = getMenuInflater();
+        menuInflater.inflate(R.menu.detail_menu, menu);
+
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected (MenuItem menuItem) {
+
+        if (menuItem.getItemId() == R.id.share) {
+
+            Intent intent = new Intent(Intent.ACTION_SEND);
+//            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.setType("text/plain");
+//            intent.setAction(data);
+            intent.putExtra(Intent.EXTRA_TEXT, data);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(menuItem);
+
+    }
+
+    public void dayinfo () {
+        Intent intent = getIntent();
+        data = intent.getStringExtra(Intent.EXTRA_TEXT);
+        TextView textView = (TextView) findViewById(R.id.details);
+        textView.setText(data);
     }
 
 

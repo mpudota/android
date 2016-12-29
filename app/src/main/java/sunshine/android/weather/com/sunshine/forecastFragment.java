@@ -58,6 +58,12 @@ public class forecastFragment extends Fragment {
         setHasOptionsMenu(true);
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        updateWeather();
+    }
+
 
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater menuInflater) {
@@ -81,6 +87,10 @@ public class forecastFragment extends Fragment {
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.refresh) {
             updateWeather();
+
+        }
+        if (item.getItemId() == R.id.share) {
+            Intent intent = new Intent(Intent.ACTION_SEND);
 
         }
         return super.onOptionsItemSelected(item);

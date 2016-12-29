@@ -8,9 +8,11 @@
         android:title="@string/settings"/>
     <item
         android:id="@+id/preferred_location"
-        android:title="Preferred_location"/>
-    <item
-        android:id="@+id/share"
-        android:title="Share"
-        android:showAsAction="ifRoom"/>
+        android:title="View in Maps"/>
+    <!--<item-->
+        <!--android:id="@+id/share"-->
+        <!--android:showAsAction="always"-->
+        <!--android:icon="@drawable/ic_share_black_24dp"-->
+        <!--android:title="Share"/>-->
+
 </menu>
