@@ -8,7 +8,6 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
-import android.support.v4.content.SharedPreferencesCompat;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -18,8 +17,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import org.json.JSONException;
 
@@ -28,7 +27,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -192,7 +190,7 @@ public class forecastFragment extends Fragment {
 
             try {
                 String baseUrl = "http://api.openweathermap.org/data/2.5/forecast/daily?";
-//                String apikey = "&APPID="+Open_Weather_Map_Api;
+
 //
 
                 Uri builduri = Uri.parse(baseUrl).buildUpon()
@@ -206,13 +204,14 @@ public class forecastFragment extends Fragment {
 
                 httpURLConnection = (HttpURLConnection) url.openConnection();
                 httpURLConnection.setRequestMethod("GET");
-                httpURLConnection.connect();
+//                httpURLConnection.connect();
 
                 Log.d("Fetch Weather", "URL Builder" + builduri.toString());
 //                Log.d("Units value", units);
 
-
+                Log.d("Exception", " at Instm start");
                 InputStream inputStream = httpURLConnection.getInputStream();
+                Log.d("Exception", " at Instm end");
                 StringBuffer stringBuffer = new StringBuffer();
 
                 if (inputStream == null) {
